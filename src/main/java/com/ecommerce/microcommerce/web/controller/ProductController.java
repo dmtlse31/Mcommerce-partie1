@@ -82,6 +82,11 @@ public class ProductController {
 		return productsWithMarge;
 	}
 
+	@GetMapping(value = "/Produits/sorted")
+	public List<Product> trierProduitsParOrdreAlphabetique() {
+		return productDao.findAllByOrderByNom();
+	}
+
 	// ajouter un produit
 	@PostMapping(value = "/Produits")
 	public ResponseEntity<Void> ajouterProduit(@Valid @RequestBody Product product) {
