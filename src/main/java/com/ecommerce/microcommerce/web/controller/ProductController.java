@@ -1,7 +1,9 @@
 package com.ecommerce.microcommerce.web.controller;
 
 import java.net.URI;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.validation.Valid;
 
@@ -66,6 +68,18 @@ public class ProductController {
 					"Le produit avec l'id " + id + " est INTROUVABLE. Écran Bleu si je pouvais.");
 
 		return produit;
+	}
+
+	@GetMapping(value = "/AdminProduits")
+	public Map<Product, Integer> scalculerMargeProduit() {
+		List<Product> products = productDao.findAll();
+		Map<Product, Integer> productsWithMarge = new HashMap<Product, Integer>();
+
+		products.stream().forEach(product -> {
+			int productMarge = product.getPrix() - product.getPrixAchat();
+			productsWithMarge.put(product, productMarge);
+		});
+		return productsWithMarge;
 	}
 
 	// ajouter un produit
